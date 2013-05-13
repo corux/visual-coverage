@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?define PRODUCT="VisualCoverage"?>
+  <?define MAINEXE="$(var.VisualCoverage.Console.TargetFileName)"?>
+  <?define VERSION="!(bind.FileVersion.$(var.MAINEXE))"?>
+  <Product Id="*" 
+           Name="$(var.PRODUCT)" 
+           Language="1033" 
+           Version="$(var.VERSION)" 
+           Manufacturer="VisualCoverage" 
+           UpgradeCode="8d4075e8-2e81-4f32-bdde-e4ab34ed7660">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <PropertyRef Id="NETFRAMEWORK45" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes"/>
+
+    <Condition Message=".NET Framework 4.5 is required, but not installed!">
+      NETFRAMEWORK45
+    </Condition>
+
+    <DirectoryRef Id="TARGETDIR"/>
+
+    <Feature Id="ProductFeature" Title="VisualCoverage" Level="1" ConfigurableDirectory="INSTALLFOLDER">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+
+    <UIRef Id="WixUI_InstallDir"/>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="VisualCoverage" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="$(var.MAINEXE)" Guid="33AABCBD-CAB1-4E51-B545-B74C709ED118">
+        <File Name="VisualCoverage.exe" Source="$(var.VisualCoverage.Console.TargetPath)"/>
+      </Component>
+      <Component Id="$(var.VisualCoverage.Core.TargetFileName)" Guid="3C77FEEB-F43C-4DD1-908F-C200A4389C23">
+        <File Source="$(var.VisualCoverage.Core.TargetPath)"/>
+      </Component>
+      <Component Id="Microsoft.VisualStudio.Coverage.Analysis" Guid="263C28D7-8D67-40B3-BE0E-6EBF81AD32C9">
+        <File Source="$(var.SolutionDir)\lib\Microsoft.VisualStudio.Coverage.Analysis.dll"/>
+      </Component>
+      <Component Id="Microsoft.VisualStudio.Coverage.Interop" Guid="080F1A69-BD9A-4935-BFAC-686E5CF1FCB4">
+        <File Source="$(var.SolutionDir)\lib\Microsoft.VisualStudio.Coverage.Interop.dll"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
