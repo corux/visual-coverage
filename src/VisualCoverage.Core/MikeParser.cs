@@ -67,13 +67,56 @@ namespace VisualCoverage.Core.Util
             this.__excludeFiles.Add(filename);
         }
 
+        private static string[] ResolveFileNames(string file)
+        {
+            if (file.Contains("*")) 
+            {
+                var lastSlash = file.LastIndexOf("/");
+                if (lastSlash < 0) 
+                {
+                    lastSlash = file.LastIndexOf("\\");
+                }
+
+                if (lastSlash < 0) 
+                {
+                    // no directory component
+                    return Directory.GetFiles(".", file, SearchOption.TopDirectoryOnly);
+                }
+                else 
+                {
+                    // with directory
+                    var dir = file.Substring(0, lastSlash);
+                    var so = SearchOption.TopDirectoryOnly;
+                    if (dir.Contains("**"))
+                    {
+                        so = SearchOption.AllDirectories;
+                        var allparts = file.Split('/', '\\');
+                        var dirparts = allparts.TakeWhile(n => n != "**");
+                        file = allparts.Last();
+                        dir = string.Join("/", dirparts);
+                        if (string.IsNullOrWhiteSpace(dir))
+                        {
+                            dir = ".";
+                        }
+                    }
+
+                    return Directory.GetFiles(dir, file, so);
+                }
+            } 
+            else 
+            {
+                return new [] { file };
+            }
+        }
+
         private static CoverageInfo JoinCoverageFiles(String[] files)
         {
             CoverageInfo result = null;
 
             try
             {
-                foreach (String file in files)
+                var resolvedFiles = files.SelectMany(n => ResolveFileNames(n));
+                foreach (String file in resolvedFiles)
                 {
                     CoverageInfo current = CoverageInfo.CreateFromFile(file);
 
