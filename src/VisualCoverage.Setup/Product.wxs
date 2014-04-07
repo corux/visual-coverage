@@ -5,13 +5,23 @@
   <?define PRODUCT="VisualCoverage"?>
   <?define MAINEXE="$(var.VisualCoverage.Console.TargetFileName)"?>
   <?define VERSION="!(bind.FileVersion.$(var.MAINEXE))"?>
-  <Product Id="*" 
-           Name="$(var.PRODUCT)" 
-           Language="1033" 
-           Version="$(var.VERSION)" 
-           Manufacturer="VisualCoverage" 
+
+  <Product Id="*"
+           Name="$(var.PRODUCT)"
+           Language="1033"
+           Version="$(var.VERSION)"
+           Manufacturer="VisualCoverage"
            UpgradeCode="8d4075e8-2e81-4f32-bdde-e4ab34ed7660">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
+
+    <Upgrade Id="8d4075e8-2e81-4f32-bdde-e4ab34ed7660">
+      <UpgradeVersion Minimum="1.0.0.0"
+                      IncludeMinimum="yes"
+                      OnlyDetect="no"
+                      Maximum="$(var.VERSION)"
+                      IncludeMaximum="no"
+                      Property="PREVIOUSFOUND" />
+    </Upgrade>
 
     <PropertyRef Id="NETFRAMEWORK45" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
