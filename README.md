@@ -32,6 +32,8 @@ Options:
   --html                Html report output file (*.html).
 
   --clover              Clover report output file (*.xml).
+  
+  --coveragexml         Coveragexml output file (*.coveragexml).
 
   -i, --input           Required. Visual studio coverage (*.coverage) input
                         file. Can be specified multiple times.
