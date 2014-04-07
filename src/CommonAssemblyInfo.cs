@@ -15,6 +15,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProductAttribute("VisualCoverage")]
 [assembly: AssemblyDescriptionAttribute("A Tool to create a clover report from Visual Studio Coverage files.")]
 [assembly: AssemblyCopyrightAttribute("Copyright (C) 2012-2023 Joaquin Sargiotto")]
-[assembly: AssemblyVersionAttribute("1.0.0.3")]
-[assembly: AssemblyInformationalVersionAttribute("1.0.0.3")]
+[assembly: AssemblyVersionAttribute("1.1.0.1")]
+[assembly: AssemblyInformationalVersionAttribute("1.1.0.1")]
 
