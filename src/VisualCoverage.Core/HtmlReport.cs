@@ -42,7 +42,7 @@ namespace VisualCoverage.Core
             
         }
         
-        public String Execute ( ProjectElement project )
+        public new String Execute ( ProjectElement project )
         {
             // load our transform file out of the embedded resources
             Stream xsltStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(

@@ -57,7 +57,7 @@ namespace VisualCoverage.Core.Metrics
             get { return _metrics["coveredconditionals"] + _metrics["coveredstatements"] + _metrics["coveredmethods"]; }
         }
         
-        public String ToXml ()
+        public new String ToXml ()
         {
             SetMetric("elements", Elements);
             SetMetric("coveredelements", CoveredElements);
