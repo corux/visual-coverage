@@ -56,6 +56,9 @@ namespace VisualCoverage.Console
             [Option(null, "clover", Required = false, HelpText = "Clover report output file (*.xml).")]
             public string CloverOutput { get; set; }
 
+            [Option(null, "coveragexml", Required = false, HelpText = "Coveragexml output file (*.coveragexml).")]
+            public string CoverageXmlOutput { get; set; }
+
             [OptionArray("i", "input", Required = true, HelpText = "Visual studio coverage (*.coverage) input file. Can be specified multiple times.")]
             public string[] InputFiles
             {
@@ -152,7 +155,7 @@ namespace VisualCoverage.Console
             }
             
             // Parse coverage file
-            ProjectElement pe = mikeParser.Parse(options.InputFiles);
+            ProjectElement pe = mikeParser.Parse(options.InputFiles, options.CoverageXmlOutput);
             
             // Generate clover report
             if (options.CloverOutput != null)

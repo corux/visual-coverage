@@ -153,12 +153,17 @@ namespace VisualCoverage.Core.Util
             return result;
         }
 
-        public ProjectElement Parse(String[] inputfiles) {
+        public ProjectElement Parse(String[] inputfiles, String outputCoveragexml = null) {
             ProjectElement PROJECT = new ProjectElement("new_project", 123323230);
             // Open file
             using (CoverageInfo info = JoinCoverageFiles(inputfiles))
             {
                 CoverageDS dataSet = info.BuildDataSet();
+
+                if (!string.IsNullOrEmpty(outputCoveragexml))
+                {
+                    dataSet.WriteXml(outputCoveragexml);
+                }
                 
                 Dictionary<String, PackageElement> packages = new Dictionary<String, PackageElement>();
                 Dictionary<uint, FileElement> files = new Dictionary<uint, FileElement>();
